@@ -30,22 +30,22 @@ public class MyDemoLoggingAspect {
 		
 		// print out method we are advising on
 		String method = theProceedingJoinPoint.getSignature().toShortString();
-		myLogger.info("\n======>>> Executing @Around on method: " + method);
+		myLogger.info("\n======>>>a Executing @Around on method: " + method);
 		
 		// get begin timestamp
 		long begin = System.currentTimeMillis();
 		
 		// now, let's execute the method
 		Object result = null;
+		
 		try {
 			result = theProceedingJoinPoint.proceed();
 		} catch (Exception e) {
 			// log the exception
 			myLogger.warning(e.getMessage());
 			
-			// give user a custom message
-			result = "Major accident! But no worries, "
-					+ "Your private AOP helicopter is on the way!";			
+			// rethrow exception
+			throw e;
 		}
 		
 		// get end timestamp
